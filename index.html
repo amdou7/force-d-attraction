@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>La poésie d'Abdou</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<style type="text/css">
+		.vers-pairs { color: red; }
+		.fins-vers-impairs { color: blue; }
+		.selected { text-decoration: underline; }
+	</style>
+</head>
+<body>
+	<div class="container py-3">
+		<h1>Force d'attraction</h1>
+
+		<p>Amie, Amie sur <span class="fins-vers-impairs">les plages atomiques</span><br />
+		<span class="vers-pairs">Tempête solaire</span><br />
+		L’amour dans <span class="fins-vers-impairs">les champs magnétiques</span><br />
+		<span class="vers-pairs">Crépusculaires</span></p>
+
+		<hr />
+
+		<p>Nuit est le ciel <span class="fins-vers-impairs">et toi-les-mains,</span><br />
+		<span class="vers-pairs">sur le trou noir,</span><br />
+		De ma bouche déformée <span class="fins-vers-impairs">par tes reins,</span><br />
+		<span class="vers-pairs">ton territoire</span></p>
+
+		<hr />
+
+		<p>Nos corps célestes <span class="fins-vers-impairs">mis en orbite</span><br />
+		<span class="vers-pairs">Horizontale</span><br />
+		Machines désirantes <span class="fins-vers-impairs">qui gravitent</span><br />
+		<span class="vers-pairs">Fusion spatiale</span></p>
+
+		<p>Cumulonimbus et <span class="fins-vers-impairs">la terre vue du ciel</span><br />
+		<span class="vers-pairs">Court circuit</span><br />
+		Perdre le contrôle <span class="fins-vers-impairs">odyssée éternelle</span><br />
+		<span class="vers-pairs">David Bowie</span></p>
+
+		<p>Années lumières et <span class="fins-vers-impairs">la terre vue d’ici</span><br />
+		<span class="vers-pairs">Fin de l’expansion</span><br />
+		L'amour reste ici <span class="fins-vers-impairs">quand tu me fuis</span><br />
+		<span class="vers-pairs">Force d’attraction</span></p>
+
+		<button type="button" id="shuffle" class="btn btn-success">Mélanger !</button>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
+	<script type="text/javascript">
+		function shuffle(a) {
+		    var j, x, i;
+		    for (i = a.length; i; i--) {
+		        j = Math.floor(Math.random() * i);
+		        x = a[i - 1];
+		        a[i - 1] = a[j];
+		        a[j] = x;
+		    }
+		}
+		jQuery.fn.extend({
+			randomize: function(){
+				var texts = [];
+				this.each(function(){
+					texts.push($(this).html());
+					shuffle(texts);
+				});
+				this.each(function(index){
+					$(this).html(texts[index]);
+				});
+				return this;
+			},
+		});
+		$("body").on("click", ".vers-pairs", function(e){
+			var $vers = $(this);
+			var $autre_vers_selectionne = $(".vers-pairs.selected");
+			if ($autre_vers_selectionne.length == 0) { $vers.addClass("selected"); }
+			else if ($vers.hasClass("selected")) { $vers.removeClass("selected"); }
+			else {
+				var $autre_vers = $($autre_vers_selectionne.get(0));
+				var autre_texte = $autre_vers.html();
+				var ce_texte = $vers.html();
+				$autre_vers.html(ce_texte);
+				$vers.html(autre_texte);
+				$(".vers-pairs").removeClass("selected");
+			}
+		}).on("click", ".fins-vers-impairs", function(e){
+			var $vers = $(this);
+			var $autre_vers_selectionne = $(".fins-vers-impairs.selected");
+			if ($autre_vers_selectionne.length == 0) { $vers.addClass("selected"); }
+			else if ($vers.hasClass("selected")) { $vers.removeClass("selected"); }
+			else {
+				var $autre_vers = $($autre_vers_selectionne.get(0));
+				var autre_texte = $autre_vers.html();
+				var ce_texte = $vers.html();
+				$autre_vers.html(ce_texte);
+				$vers.html(autre_texte);
+				$(".fins-vers-impairs").removeClass("selected");
+			}
+		}).on("click", "#shuffle", function(e){
+			$(".fins-vers-impairs").randomize();
+			$(".vers-pairs").randomize();
+		});
+	</script>
+</body>
+</html>
